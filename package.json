@@ -1,0 +1,15 @@
+{
+  "name": "substance-forms",
+  "version": "0.1.0",
+  "description": "Add substance to your website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "substance": "substance/substance#beta-6",
+    "substance-bundler": "^0.5.1"
+  }
+}
