@@ -9,6 +9,8 @@ b.task('example', function() {
 })
 
 b.task('substance', function() {
+  // build substance
+  b.make('substance')
   b.copy('./node_modules/substance/dist', './dist/substance')
 })
 
@@ -17,10 +19,9 @@ b.task('lib', function() {
     buble: true,
     ignore: ['substance-cheerio'],
     external: ['substance'],
-    commonjs: { include: ['/**/node_modules/lodash/**'] },
     targets: [{
       useStrict: false,
-      dest: './dist/forms.js',
+      dest: './dist/substance-forms.js',
       format: 'umd', moduleName: 'substance', sourceMapRoot: __dirname, sourceMapPrefix: 'substance'
     }]
   })
