@@ -2,7 +2,7 @@ import {TextPropertyComponent} from "substance"
 
 class ParagraphComponent extends TextPropertyComponent {
   constructor(parent, props) {
-    props.path = [ props.node.id, "content"]
+    props.path = [ props.node.id, 'content']
     super(parent, props)
   }
 

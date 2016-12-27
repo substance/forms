@@ -2,7 +2,7 @@ import {AnnotationComponent} from 'substance'
 
 class StrongComponent extends AnnotationComponent {
   _getTagName() {
-    return 'b'
+    return 'strong'
   }
 }
 
