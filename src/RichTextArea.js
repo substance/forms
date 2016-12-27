@@ -5,21 +5,15 @@ class RichTextArea extends Component {
   render($$) {
     let node = this.props.node
     let el = $$('div').addClass('sc-rich-text-area')
-    let Overlay = this.getComponent('overlay')
-    let ContextMenu = this.getComponent('context-menu')
-    let BodyScrollPane = this.getComponent('body-scroll-pane')
     let editor = $$(ContainerEditor, {
       node: node,
       name: node.id,
       containerId: node.id,
       textTypes: this.getConfigurator().getTextTypes()
     })
-    let scrollPane = $$(BodyScrollPane).append(
-      editor,
-      $$(Overlay),
-      $$(ContextMenu)
-    ).ref('bodyScrollPane')
-    el.append(scrollPane)
+    el.append(
+      editor
+    )
     return el
   }
 

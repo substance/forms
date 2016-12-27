@@ -1,4 +1,4 @@
-import { Component, EditorSession, DefaultDOMElement } from 'substance'
+import { EditorSession, DefaultDOMElement, BodyScrollPane } from 'substance'
 import Configurator from './StandaloneConfigurator'
 import RichTextArea from './RichTextArea'
 
@@ -12,15 +12,15 @@ import RichTextArea from './RichTextArea'
   Instead child components (RichTextArea or RichTextField) are just provided with an adequate context,
   and necessary props.
 */
-class Page extends Component {
+class Page extends BodyScrollPane {
 
   constructor(root) {
     super(null, {})
-
     this.root = DefaultDOMElement.wrapNativeElement(root || window.document.body)
-
     this.__isMounted__ = true
     this._initialize()
+    // NOTE: we need to call didMount manually to consider handlers set in BodyScrollPane
+    this.didMount()
   }
 
   _initialize() {
@@ -72,6 +72,7 @@ class Page extends Component {
 
   getChildContext() {
     return {
+      scrollPane: this,
       configurator: this.configurator,
       editorSession: this.editorSession,
       doc: this.editorSession.getDocument(),
@@ -113,12 +114,24 @@ class Page extends Component {
   _mountEditables(items) {
     let editables = {}
     let doc = this.doc
+    // let $$ = this.root.getElementFactory()
+
+    // Setup overlay component
+    let Overlay = this.componentRegistry.get('overlay')
+    let overlay = new Overlay(this, {})
+    // initial render
+    overlay.rerender()
+    // NOTE: as this component is not really in the DOM, we need to trigger did mount on our own
+    overlay.triggerDidMount()
+    this.root.append(overlay.el)
+
     Object.keys(items).forEach((key) => {
       let item = items[key]
       let el = item.el
       let id = item.id
       let type = item.type
       let editable
+
       switch(type) {
         case 'area': {
           let container = doc.get(id)
@@ -132,7 +145,8 @@ class Page extends Component {
       editables[id] = editable
       // take over ownership
       editable.rerender()
-      // Note: as this component is not really in the DOM, we need to trigger did mount on our own
+
+      // NOTE: as this component is not really in the DOM, we need to trigger did mount on our own
       editable.triggerDidMount()
     })
     return editables
