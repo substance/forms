@@ -2,7 +2,7 @@ var b = require('substance-bundler')
 
 function _buildLib(transpileToES5) {
   b.copy('./node_modules/substance/dist', './dist/substance')
-  b.js('./lib/forms.js', {
+  b.js('./lib/substance-forms.js', {
     buble: transpileToES5,
     ignore: ['substance-cheerio'],
     external: ['substance'],
@@ -13,6 +13,10 @@ function _buildLib(transpileToES5) {
     }]
   })
 }
+
+b.task('assets', function() {
+  b.css('./lib/substance-forms.css', './dist/substance-forms.css', { variables: true })
+})
 
 b.task('clean', function() {
   b.rm('./dist');
@@ -38,9 +42,8 @@ b.task('lib:pure', function() {
   _buildLib(false)
 })
 
-b.task('default', ['clean', 'example', 'substance', 'lib'])
-b.task('dev', ['clean', 'example', 'substance:pure', 'lib:pure'])
-
+b.task('default', ['clean', 'example', 'substance', 'lib', 'assets'])
+b.task('dev', ['clean', 'example', 'substance:pure', 'lib:pure', 'assets'])
 
 b.setServerPort(5555)
 b.serve({
