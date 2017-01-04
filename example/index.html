@@ -9,28 +9,47 @@
     @import 'substance-forms.css';
 
     body {
-      background: #efefef;
       line-height: 1.5;
+      font-family: "Avenir Next", arial, sans-serif;
     }
 
     .page {
-      max-width: 900px;
+      max-width: 600px;
       margin: auto;
       padding-top: 50px;
     }
 
     .title {
-      text-align: center;
-      font-size: 24px;
+      font-weight: 600;
+      font-size: 36px;
+      padding-bottom: 10px;
     }
 
-    label {
-      text-align: center;
-      font-family: "Avenir Next", arial, sans-serif;
+    .form-section {
+      padding-bottom: 20px;
+    }
+
+    .form-hint {
+      font-size: 14px;
+      font-family: Georgia;
+      color: #777;
+      padding-bottom: 20px;
+    }
+
+    .form-heading {
       font-weight: 600;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .5px;
+      font-size: 26px;
+      padding-bottom: 10px;
+    }
+
+    input.form-input {
+      font-family: "Avenir Next", arial, sans-serif;
+      border: 1px solid #ddd;
+      height: 40px;
+      padding: 0px 5px;
+      font-size: 16px;
+      display: block;
+      width: 100%;
     }
 
     h1, h2, h3 {
@@ -44,7 +63,6 @@
     h3 { font-size: 16px; }
 
     p {
-      font-family: Georgia;
       padding-bottom: 20px;
     }
 
@@ -52,54 +70,89 @@
     i { font-style: italic; }
 
     .sc-rich-text-area {
-      background: #fff;
-      margin: 20px;
-      padding: 10px;
-    }
-
-    .sc-rich-text-area .sc-container-editor:focus {
-      outline: 1px solid #blue;
+      border: 1px solid #ddd;
+      padding: 20px 10px;
+      padding-bottom: 0px;
     }
 
     #submit-button {
-      background-color: #ccc;
-      padding: 4px 6px 3px;
+      background-color: #4990E2;
+      padding: 10px;
       border-width: 2px;
-      border-style: outset;
       border-color: buttonface;
+      width: 300px;
+      font-weight: 600;
+      color: white;
       text-align: center;
-      width: 400px;
-      margin: 0px auto;
+      margin: 20px auto;
+    }
+
+    .text-center {
+      text-align: center;
     }
 
   </style>
   <script type="text/javascript">
-    function _onSubmit(event) {
-      event.preventDefault()
-      event.stopPropagation()
-      var form = event.currentTarget
-      alert('Submitting: ' + form.innerHTML)
+    function _onSubmit(e) {
+      else.preventDefault()
+      e.stopPropagation()
+      let forms = window.forms
+
+      let data = {
+        survey_motivation: forms.getHTML('survey_motivation'),
+        survey_recommend: document.querySelector('input[name="survey_recommend"]:checked').value,
+        survey_name: document.getElementById('survey_name').value
+      }
+
+      alert('Look at console output to see submission data.')
     }
   </script>
 </head>
 <body>
   <div class="page">
-    <label>How will you manage copyright and Intellectual Property Rights (IPR) issues?</label>
-    <div id="project_description" data-type="area" editable data-content-types="emphasis strong">
-      <p>Lorem ipsum dolor <b>sit</b> amet, consectetur adipiscing elit. Donec a eros ut metus finibus gravida vel ac enim. Pellentesque lacus nisl, placerat ut mattis ac, <i>iaculis</i>‚ ac magna. Nunc sed commodo turpis. Aliquam elit nibh, varius eu gravida et, fermentum eget mi. Aenean volutpat imperdiet maximus. Nullam maximus quam quis ornare faucibus. Integer est leo, accumsan at massa sed, rhoncus aliquam ex. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+    <div class="title">Substance Forms</div>
+    <div class="form-hint">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu tempor sapien, eget finibus augue. Aenean molestie tincidunt ante nec ullamcorper. Pellentesque id aliquam lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. In tincidunt erat quis felis malesuada, at tristique ex tristique. Aenean ut dui egestas, porttitor eros at, dapibus ante.
     </div>
-    <label>What measures you will take to makes sure data does not get lost?</label>
-    <div id="biography" data-type="area" editable data-content-types="heading emphasis strong link">
-      <h1>Heading 1</h1>
-      <p>Lorem ipsum dolor <b>sit</b> amet, consectetur adipiscing elit. Donec a eros ut metus finibus gravida vel ac enim. Pellentesque lacus nisl, placerat ut mattis ac, <i>iaculis</i>‚ ac magna. Nunc sed commodo turpis. Aliquam elit nibh, varius eu gravida et, fermentum eget mi. Aenean volutpat imperdiet maximus. Nullam maximus quam quis ornare faucibus. Integer est leo, accumsan at massa sed, rhoncus aliquam ex. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-      <h2>Heading 2</h2>
-      <p>Lorem ipsum dolor <b>sit</b> amet, consectetur adipiscing elit. Donec a eros ut metus finibus gravida vel ac enim. Pellentesque lacus nisl, placerat ut mattis ac, <i>iaculis</i>‚ ac magna. Nunc sed commodo turpis. Aliquam elit nibh, varius eu gravida et, fermentum eget mi. Aenean volutpat imperdiet maximus. Nullam maximus quam quis ornare faucibus. Integer est leo, accumsan at massa sed, rhoncus aliquam ex. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-    </div>
-    <form id="submission" onsubmit="_onSubmit(event)">
-      <input type="hidden" name="project_description">
-      <input type="hidden" name="biography">
+    <form id="submission" onsubmit="_onSubmit(e)">
+      <div class="form-section">
+        <div class="form-heading">Why are you here?</div>
+        <div class="form-hint">
+          The following field is a Substance rich text editor, that produces clean annotated HTML.
+        </div>
+        <div id="survey_motivation" editable data-type="area">
+          <p>Tell us why you are here (<em>200-1000 words</em>)</p>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-heading">What's your name?</div>
+        <div class="form-hint">
+          This is a regular HTML input field. We designed Substance forms so you can easily mix it with classic form elements or combine it with 3rd party widget libraries (date picker etc.)
+        </div>
+        <input id="survey_name" class="form-input" type="text" placeholder="Enter your full name" name="survey_name">
+      </div>
+
+      <div class="form-section">
+        <div class="form-heading">Would you recommend this library?</div>
+        <div class="form-hint">
+          Regular radio buttons can be used too.
+        </div>
+        <div class="option-group">
+          <div class="option"><input type="radio" name="survey_recommend" value="definitely" checked> Definitely</div>
+          <div class="option"><input type="radio" name="survey_recommend" value="maybe"> Maybe</div>
+          <div class="option"><input type="radio" name="survey_recommend" value="never"> Never</div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <button id="submit-button" type="submit" form="submission">Submit Survey</button>
+        <div class="form-hint text-center">
+          This is just a demo, nothing is actually submitted.
+        </div>
+      </div>
     </form>
-    <button id="submit-button" type="submit" form="submission">Submit</button>
+
   </div>
 </body>
 </html>
