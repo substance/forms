@@ -19,10 +19,19 @@
       padding-top: 50px;
     }
 
+    a {
+      color: #4990E2;
+    }
+
     .title {
       font-weight: 600;
       font-size: 36px;
       padding-bottom: 10px;
+    }
+
+    .intro {
+      padding-bottom: 20px;
+      font-size: 18px;
     }
 
     .form-section {
@@ -94,16 +103,16 @@
   </style>
   <script type="text/javascript">
     function _onSubmit(e) {
-      else.preventDefault()
+      e.preventDefault()
       e.stopPropagation()
-      let forms = window.forms
+      let forms = window.substanceForms
 
       let data = {
         survey_motivation: forms.getHTML('survey_motivation'),
         survey_recommend: document.querySelector('input[name="survey_recommend"]:checked').value,
         survey_name: document.getElementById('survey_name').value
       }
-
+      console.info(data)
       alert('Look at console output to see submission data.')
     }
   </script>
@@ -111,22 +120,24 @@
 <body>
   <div class="page">
     <div class="title">Substance Forms</div>
-    <div class="form-hint">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu tempor sapien, eget finibus augue. Aenean molestie tincidunt ante nec ullamcorper. Pellentesque id aliquam lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. In tincidunt erat quis felis malesuada, at tristique ex tristique. Aenean ut dui egestas, porttitor eros at, dapibus ante.
+    <div class="intro">
+      Substance Forms is a <a href="http://github.com/substance/forms">JavaScript library</a>
+      you can use to create better web forms. You can mark areas of the page as
+      editable and access the contents with a simple JavaScript API.
     </div>
-    <form id="submission" onsubmit="_onSubmit(e)">
+    <form id="submission" onsubmit="_onSubmit(event)">
       <div class="form-section">
-        <div class="form-heading">Why are you here?</div>
+        <div class="form-heading">What brought you here?</div>
         <div class="form-hint">
           The following field is a Substance rich text editor, that produces clean annotated HTML.
         </div>
         <div id="survey_motivation" editable data-type="area">
-          <p>Tell us why you are here (<em>200-1000 words</em>)</p>
+          <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>)</p>
         </div>
       </div>
 
       <div class="form-section">
-        <div class="form-heading">What's your name?</div>
+        <div class="form-heading">Who are you?</div>
         <div class="form-hint">
           This is a regular HTML input field. We designed Substance forms so you can easily mix it with classic form elements or combine it with 3rd party widget libraries (date picker etc.)
         </div>
