@@ -1,0 +1,7 @@
+.sc-comment {
+  background: yellow;
+}
+
+.sc-edit-comment-tool > * {
+  display: inline-block;
+}
