@@ -40,7 +40,7 @@ Project Status: Experimental
   <div id="about" editable>
     <p>Tell us <strong>something</strong> about <em>you</em></p>
   </div>
-  <button onclick="_onSubmit(e)">Submit</button>
+  <button onclick="_onSubmit()">Submit</button>
 </body>
 </html>
 ```
