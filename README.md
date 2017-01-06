@@ -18,6 +18,7 @@ Project Status: Experimental
   <script type="text/javascript" src="substance-forms.js"></script>
 
   <style>
+    /* FontAwesome is used to display the icons shown in the overlay */
     @import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
     /* Substance Forms looks best with a CSS reset */
     @import 'substance/substance-reset.css';
