@@ -52,7 +52,7 @@ Download the latest [release](https://github.com/substance/forms/releases) and u
 If you want to contribute, you can set up a development environment like so:
 
 ```
-$ git clone https://github.com/substance/examples.git
+$ git clone https://github.com/substance/forms.git
 $ npm install
 $ npm start
 ```
