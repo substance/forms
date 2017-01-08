@@ -11,7 +11,7 @@ Project Status: Experimental
 
 ## Usage
 
-Download the latest [release](https://github.com/substance/forms/releases).
+Download the latest [release](https://github.com/substance/forms/releases) and use like shown below.
 
 ```html
 <html>
