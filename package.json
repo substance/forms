@@ -9,7 +9,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "substance": "substance/substance#develop",
+    "substance": "substance/substance#5ef9721820f1a7b2e1b3a277aae61d6eeeefd76c",
     "substance-bundler": "^0.5.1"
   }
 }

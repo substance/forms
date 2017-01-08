@@ -113,7 +113,7 @@
         survey_name: document.getElementById('survey_name').value
       }
       console.info(data)
-      alert('Look at console output to see submission data.')
+      alert(JSON.stringify(data, null, '  '))
     }
   </script>
 </head>
@@ -132,12 +132,12 @@
           The following field is a Substance rich text editor, that produces clean annotated HTML.
         </div>
         <div id="survey_motivation" editable data-type="area">
-          <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>). <span data-comment="I am a comment">lalala</span></p>
+          <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>).</p>
         </div>
       </div>
 
       <div class="form-section">
-        <div class="form-heading">Who are you?</div>
+        <div class="form-heading">What's your name?</div>
         <div class="form-hint">
           This is a regular HTML input field. We designed Substance forms so you can easily mix it with classic form elements or combine it with 3rd party widget libraries (date picker etc.)
         </div>
@@ -163,7 +163,6 @@
         </div>
       </div>
     </form>
-
   </div>
 </body>
 </html>

@@ -54,3 +54,7 @@ $ git clone https://github.com/substance/examples.git
 $ npm install
 $ npm start
 ```
+
+## Credits
+
+This project is developed by Substance in collaboration with the University of California.

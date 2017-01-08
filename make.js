@@ -27,7 +27,7 @@ b.task('example', function() {
 })
 
 b.task('substance', function() {
-  b.make('substance', 'clean', 'browser:pure')
+  b.make('substance', 'clean', 'browser')
 })
 
 b.task('substance:pure', function() {
