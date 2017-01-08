@@ -109,8 +109,8 @@
 
       let data = {
         survey_motivation: forms.getHTML('survey_motivation'),
-        survey_recommend: document.querySelector('input[name="survey_recommend"]:checked').value,
-        survey_name: document.getElementById('survey_name').value
+        survey_name: document.getElementById('survey_name').value,
+        survey_recommend: document.querySelector('input[name="survey_recommend"]:checked').value
       }
       console.info(data)
       alert(JSON.stringify(data, null, '  '))

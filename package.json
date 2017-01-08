@@ -1,12 +1,12 @@
 {
   "name": "substance-forms",
   "version": "0.1.0",
-  "description": "Next-gen web forms with Substance.",
-  "main": "index.js",
+  "description": "Better web forms with Substance.",
+  "main": "dist/substance-forms.js",
+  "jsnext:main": "lib/substance-forms.js",
   "scripts": {
     "start": "node make -w -s"
   },
-  "author": "",
   "license": "MIT",
   "devDependencies": {
     "substance": "substance/substance#5ef9721820f1a7b2e1b3a277aae61d6eeeefd76c",

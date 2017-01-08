@@ -11,6 +11,8 @@ Project Status: Experimental
 
 ## Usage
 
+Download the latest [release](https://github.com/substance/forms/releases).
+
 ```html
 <html>
 <head>
@@ -57,4 +59,4 @@ $ npm start
 
 ## Credits
 
-This project is developed by Substance in collaboration with the University of California.
+This project is developed by [Substance](http://substance.io) in collaboration with the University of California.
