@@ -43,8 +43,8 @@ b.task('lib:dev', function() {
   _buildLib(false)
 })
 
-b.task('default', ['clean', 'lib', 'assets', 'example'])
-b.task('dev', ['clean', 'lib:dev', 'assets', 'example'])
+b.task('default', ['clean', 'assets', 'example', 'lib'])
+b.task('dev', ['clean', 'assets', 'example', 'lib:dev'])
 
 b.setServerPort(5555)
 b.serve({
