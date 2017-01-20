@@ -1,7 +1,7 @@
 let b = require('substance-bundler')
 let path = require('path')
 
-function _buildLib(transpileToES5) {
+function _buildLib(transpileToES5, cleanup) {
   b.js('./lib/substance-forms.js', {
     target: {
       useStrict: !transpileToES5,
@@ -13,7 +13,8 @@ function _buildLib(transpileToES5) {
     alias: {
       'substance': path.join(__dirname, 'node_modules/substance/index.es.js')
     },
-    buble: transpileToES5
+    buble: Boolean(transpileToES5),
+    cleanup: Boolean(cleanup)
   })
 }
 
@@ -35,12 +36,12 @@ b.task('example', function() {
 })
 
 b.task('lib', function() {
-  _buildLib(true)
+  _buildLib('transpile', 'clean')
   _minifyLib()
 })
 
 b.task('lib:dev', function() {
-  _buildLib(false)
+  _buildLib()
 })
 
 b.task('default', ['clean', 'assets', 'example', 'lib'])
