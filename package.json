@@ -9,7 +9,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "substance": "substance/substance#5ef9721820f1a7b2e1b3a277aae61d6eeeefd76c",
-    "substance-bundler": "^0.5.1"
+    "substance": "substance/substance#21686fdb37d84873653c9b7a945d686580059cfc",
+    "substance-bundler": "0.7.1",
+    "uglify-js-harmony": "2.6.2"
   }
 }
