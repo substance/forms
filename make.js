@@ -22,7 +22,11 @@ function _minifyLib() {
   b.minify('./dist/substance-forms.js', './dist/substance-forms.min.js')
 }
 
-b.task('assets', function() {
+b.task('substance:css', function() {
+  b.make('substance', 'css')
+})
+
+b.task('assets', ['substance:css'], function() {
   b.copy('./node_modules/substance/substance-reset.css', './dist/substance-reset.css')
   b.css('./lib/substance-forms.css', './dist/substance-forms.css', { variables: true })
 })
