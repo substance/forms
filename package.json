@@ -10,7 +10,7 @@
   "license": "MIT",
   "devDependencies": {
     "substance": "substance/substance#develop",
-    "substance-bundler": "0.7.1",
+    "substance-bundler": "0.7.2",
     "uglify-js-harmony": "2.6.2"
   }
 }
