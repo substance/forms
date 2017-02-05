@@ -62,7 +62,6 @@
 
     h1, h2, h3 {
       font-weight: 600;
-      margin-bottom: 10px;
       font-family: "Avenir Next", arial, sans-serif;
     }
 
@@ -70,17 +69,17 @@
     h2 { font-size: 20px; }
     h3 { font-size: 16px; }
 
-    p {
-      padding-bottom: 20px;
-    }
-
     b { font-weight: 600; }
     i { font-style: italic; }
 
     .sc-rich-text-area {
       border: 1px solid #ddd;
-      padding: 20px 10px;
+      padding: 0px 20px;
       padding-bottom: 0px;
+    }
+
+    .sc-rich-text-area .sc-container-editor > * {
+      margin: 20px 0;
     }
 
     #submit-button {
@@ -132,6 +131,13 @@
         </div>
         <div id="survey_motivation" editable data-type="area">
           <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>).</p>
+          <table>
+            <tbody>
+              <tr><td>A</td><td>B</td><td>C</td></tr>
+              <tr><td>A</td><td>B</td><td>C</td></tr>
+            </tbody>
+          </table>
+          <img src="https://avatars2.githubusercontent.com/u/2931?v=3&s=400"/>
           <ul>
             <li>A</li>
             <li>B</li>
