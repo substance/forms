@@ -1,9 +1,9 @@
 # Substance Forms
 
-Substance Forms is a JavaScript library you can include your page to create
-better web forms. You can mark areas of the page as editable and access
-the contents with a simple JavaScript API. You have full control over markup
-and styling, and you can mix the rich text inputs with classic form elements.
+Substance Forms is a JavaScript library for creating better web forms.
+You can mark areas of the page as editable and access the contents with a
+simple JavaScript API. You have full control over markup and styling, and you
+can mix the rich text inputs with classic form elements.
 
 See [the demo](http://substance.io/forms).
 

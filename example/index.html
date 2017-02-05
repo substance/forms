@@ -3,7 +3,7 @@
   <script type="text/javascript" src="substance-forms.js"></script>
 
   <style>
-    @import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+    @import url('lib/font-awesome/css/font-awesome.min.css');
     @import 'substance-reset.css';
     @import 'substance-forms.css';
 
@@ -62,7 +62,6 @@
 
     h1, h2, h3 {
       font-weight: 600;
-      margin-bottom: 10px;
       font-family: "Avenir Next", arial, sans-serif;
     }
 
@@ -70,17 +69,17 @@
     h2 { font-size: 20px; }
     h3 { font-size: 16px; }
 
-    p {
-      padding-bottom: 20px;
-    }
-
     b { font-weight: 600; }
     i { font-style: italic; }
 
     .sc-rich-text-area {
       border: 1px solid #ddd;
-      padding: 20px 10px;
+      padding: 0px 20px;
       padding-bottom: 0px;
+    }
+
+    .sc-rich-text-area .sc-container-editor > * {
+      margin: 20px 0;
     }
 
     #submit-button {
@@ -132,6 +131,7 @@
         </div>
         <div id="survey_motivation" editable data-type="area">
           <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>).</p>
+          <img src="http://www.publicdomainpictures.net/pictures/140000/velka/coromandel-peninsula.jpg"/>
           <ul>
             <li>A</li>
             <li>B</li>
@@ -140,17 +140,23 @@
               <li>A2</li>
             </ul>
           </ul>
+          <p>This is <em>just</em> a test.</p>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-heading">Can you provide a short tabular CV?</div>
+        <div class="form-hint">
+          This is another rich text field. Note, that you can drag the table and drop it on the previous field.
+        </div>
+        <div id="hello" editable data-type="area">
+          <p>Here is my CV:</p>
           <table>
             <tbody>
-              <tr><td>A1</td><td>B1</td><td>C1</td></tr>
-              <tr><td rowspan="3">A2:A3</td><td colspan="2">B1:C1</td></tr>
-              <tr><td>B3</td><td>C3</td></tr>
-              <tr><td>B4</td><td>C4</td></tr>
-              <tr><td>A5</td><td rowspan="2">B5:B6</td><td>C5</td></tr>
-              <tr><td>A6</td><td>C6</td></tr>
+              <tr><td>A</td><td>B</td><td>C</td></tr>
+              <tr><td>A</td><td>B</td><td>C</td></tr>
             </tbody>
           </table>
-          <p>This is <em>just</em> a test.</p>
         </div>
       </div>
 
