@@ -27,6 +27,7 @@ b.task('substance:css', function() {
 })
 
 b.task('assets', ['substance:css'], function() {
+  b.copy('node_modules/font-awesome', './dist/lib/font-awesome')
   b.copy('./node_modules/substance/substance-reset.css', './dist/substance-reset.css')
   b.css('./lib/substance-forms.css', './dist/substance-forms.css', { variables: true })
 })

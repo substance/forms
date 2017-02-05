@@ -11,6 +11,7 @@
   "devDependencies": {
     "substance": "substance/substance#develop",
     "substance-bundler": "0.7.2",
+    "font-awesome": "4.5.0",
     "uglify-js-harmony": "2.6.2"
   }
 }
