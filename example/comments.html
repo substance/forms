@@ -1,0 +1,220 @@
+<html>
+<head>
+  <script type="text/javascript" src="substance-forms.js"></script>
+
+  <style>
+    @import url('lib/font-awesome/css/font-awesome.min.css');
+    @import 'substance-reset.css';
+    @import 'substance-forms.css';
+
+    body {
+      line-height: 1.5;
+      font-family: "Avenir Next", arial, sans-serif;
+    }
+
+    .page {
+      max-width: 600px;
+      margin: auto;
+      padding-top: 50px;
+      position: relative;
+    }
+
+    a {
+      color: #4990E2;
+    }
+
+    .title {
+      font-weight: 600;
+      font-size: 36px;
+      padding-bottom: 10px;
+    }
+
+    .intro {
+      padding-bottom: 20px;
+      font-size: 18px;
+    }
+
+    .form-section {
+      padding-bottom: 20px;
+    }
+
+    .form-hint {
+      font-size: 14px;
+      font-family: Georgia;
+      color: #777;
+      padding-bottom: 20px;
+    }
+
+    .form-heading {
+      font-weight: 600;
+      font-size: 26px;
+      padding-bottom: 10px;
+    }
+
+    input.form-input {
+      font-family: "Avenir Next", arial, sans-serif;
+      border: 1px solid #ddd;
+      height: 40px;
+      padding: 0px 5px;
+      font-size: 16px;
+      display: block;
+      width: 100%;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      font-family: "Avenir Next", arial, sans-serif;
+    }
+
+    h1 { font-size: 24px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 16px; }
+
+    b { font-weight: 600; }
+    i { font-style: italic; }
+
+    .sc-rich-text-area {
+      border: 1px solid #ddd;
+      padding: 0px 20px;
+      padding-bottom: 0px;
+    }
+
+    .sc-rich-text-area .sc-container-editor > * {
+      margin: 20px 0;
+    }
+
+    #submit-button {
+      background-color: #4990E2;
+      padding: 10px;
+      border-width: 2px;
+      border-color: buttonface;
+      width: 300px;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      margin: 20px auto;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    #comments_overlay {
+      position: absolute;
+      top: 0px;
+      width: 200px;
+      right: -220px;
+      background: blue;
+    }
+
+  </style>
+  <script type="text/javascript">
+    window.addEventListener("load", function() {
+      let forms = new SubstanceForms(document.body, {
+        comments: true
+      })
+      function _onSubmit(e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        let data = {
+          survey_motivation: forms.getHTML('survey_motivation'),
+          survey_name: document.getElementById('survey_name').value,
+          survey_recommend: document.querySelector('input[name="survey_recommend"]:checked').value
+        }
+        console.info(data)
+        alert(JSON.stringify(data, null, '  '))
+      }
+
+      var comments = {}
+
+      forms.on('comment:selected', function(fieldName, commentId) {
+        renderComment(commentId)
+      })
+
+      function renderComment() {
+
+      }
+
+    })
+
+  </script>
+</head>
+<body>
+  <div class="page">
+    <div id="comments_overlay">
+      Hello I am a comment
+    </div>
+    <div class="title">Substance Forms</div>
+    <div class="intro">
+      Substance Forms is a <a href="http://github.com/substance/forms">JavaScript library</a>
+      you can use to create better web forms. You can mark areas of the page as
+      editable and access the contents with a simple JavaScript API.
+    </div>
+    <form id="submission" onsubmit="_onSubmit(event)">
+      <div class="form-section">
+        <div class="form-heading">What brought you here?</div>
+        <div class="form-hint">
+          The following field is a Substance rich text editor, that produces clean annotated HTML.
+        </div>
+        <div id="survey_motivation" editable data-type="area">
+          <p>Tell us <strong>why</strong> you <span data-id="my-comment" data-comment="hello">are</span> here (<em>200-1000 words</em>).</p>
+          <img src="http://www.publicdomainpictures.net/pictures/140000/velka/coromandel-peninsula.jpg"/>
+          <ul>
+            <li>A</li>
+            <li>B</li>
+            <ul>
+              <li>A1</li>
+              <li>A2</li>
+            </ul>
+          </ul>
+          <p>This is <em>just</em> a test.</p>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-heading">Can you provide a short tabular CV?</div>
+        <div class="form-hint">
+          This is another rich text field. Note, that you can drag the table and drop it on the previous field.
+        </div>
+        <div id="hello" editable data-type="area">
+          <p>Here is my CV:</p>
+          <table>
+            <tbody>
+              <tr><td>A</td><td>B</td><td>C</td></tr>
+              <tr><td>A</td><td>B</td><td>C</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-heading">What's your name?</div>
+        <div class="form-hint">
+          This is a regular HTML input field. We designed Substance forms so you can easily mix it with classic form elements or combine it with 3rd party widget libraries (date picker etc.)
+        </div>
+        <input id="survey_name" class="form-input" type="text" placeholder="Enter your full name" name="survey_name">
+      </div>
+
+      <div class="form-section">
+        <div class="form-heading">Would you recommend this library?</div>
+        <div class="form-hint">
+          Regular radio buttons can be used too.
+        </div>
+        <div class="option-group">
+          <div class="option"><input type="radio" name="survey_recommend" value="definitely" checked> Definitely</div>
+          <div class="option"><input type="radio" name="survey_recommend" value="maybe"> Maybe</div>
+          <div class="option"><input type="radio" name="survey_recommend" value="never"> Never</div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <button id="submit-button" type="submit" form="submission">Submit Survey</button>
+        <div class="form-hint text-center">
+          This is just a demo, nothing is actually submitted.
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
