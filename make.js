@@ -38,6 +38,7 @@ b.task('clean', function() {
 
 b.task('example', function() {
   b.copy('./example/index.html', './dist/')
+  b.copy('./example/comments.html', './dist/')
 })
 
 b.task('lib', function() {
