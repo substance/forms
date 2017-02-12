@@ -5,7 +5,8 @@
   "main": "dist/substance-forms.js",
   "jsnext:main": "lib/substance-forms.js",
   "scripts": {
-    "start": "node make dev -w -s"
+    "start": "node make -w -s",
+    "dev": "node make dev -w -s"
   },
   "license": "MIT",
   "devDependencies": {
