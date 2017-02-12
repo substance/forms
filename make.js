@@ -10,9 +10,6 @@ function _buildLib(transpileToES5, cleanup) {
     },
     // NOTE: do not include XNode (id must be the same as used by DefaultDOMElement)
     ignore: ['./XNode'],
-    alias: {
-      'substance': path.join(__dirname, 'node_modules/substance/index.es.js')
-    },
     buble: Boolean(transpileToES5),
     cleanup: Boolean(cleanup)
   })
@@ -22,11 +19,7 @@ function _minifyLib() {
   b.minify('./dist/substance-forms.js', './dist/substance-forms.min.js')
 }
 
-b.task('substance:css', function() {
-  b.make('substance', 'css')
-})
-
-b.task('assets', ['substance:css'], function() {
+b.task('assets', function() {
   b.copy('node_modules/font-awesome', './dist/lib/font-awesome')
   b.copy('./node_modules/substance/substance-reset.css', './dist/substance-reset.css')
   b.css('./lib/substance-forms.css', './dist/substance-forms.css', { variables: true })
@@ -45,12 +38,12 @@ b.task('lib', function() {
   _minifyLib()
 })
 
-b.task('lib:dev', function() {
+b.task('dev:lib', function() {
   _buildLib()
 })
 
 b.task('default', ['clean', 'assets', 'example', 'lib'])
-b.task('dev', ['clean', 'assets', 'example', 'lib:dev'])
+b.task('dev', ['clean', 'assets', 'example', 'dev:lib'])
 
 b.setServerPort(5555)
 b.serve({
