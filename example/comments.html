@@ -126,7 +126,11 @@
         alert(JSON.stringify(data, null, '  '))
       }
 
-      var comments = {}
+      var comments = {
+        'my-comment': {
+          content: 'Hello world'
+        }
+      }
 
       forms.on('comment:selected', function(fieldName, commentId) {
         renderComment(commentId)
@@ -158,7 +162,7 @@
           The following field is a Substance rich text editor, that produces clean annotated HTML.
         </div>
         <div id="survey_motivation" editable data-type="area">
-          <p>Tell us <strong>why</strong> you <span data-id="my-comment" data-comment="hello">are</span> here (<em>200-1000 words</em>).</p>
+          <p>Tell us <strong>why</strong> you <span data-id="my-comment">are</span> here (<em>200-1000 words</em>).</p>
           <img src="http://www.publicdomainpictures.net/pictures/140000/velka/coromandel-peninsula.jpg"/>
           <ul>
             <li>A</li>
