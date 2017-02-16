@@ -23,6 +23,10 @@
       color: #4990E2;
     }
 
+    .hidden {
+      visibility: hidden;
+    }
+
     .title {
       font-weight: 600;
       font-size: 36px;
@@ -70,17 +74,18 @@
     h2 { font-size: 20px; }
     h3 { font-size: 16px; }
 
-    b { font-weight: 600; }
-    i { font-style: italic; }
+    b, strong { font-weight: 600; }
+    i, em { font-style: italic; }
 
     .sc-rich-text-area {
+      background: #fff;
       border: 1px solid #ddd;
       padding: 0px 20px;
       padding-bottom: 0px;
     }
 
     .sc-rich-text-area .sc-container-editor > * {
-      margin: 20px 0;
+      margin: 10px 0;
     }
 
     #submit-button {
@@ -104,50 +109,136 @@
       top: 0px;
       width: 200px;
       right: -220px;
-      background: blue;
+      border-radius: 5px;
+      background: #ffff82;
+      border: 1px solid #D6D66C;
+      font-size: 12px;
+    }
+
+    #comments_overlay .sc-comment {
+      border-bottom: 1px solid #D6D66C;
+      padding: 10px;
+    }
+
+    #comments_overlay .sc-rich-text-area {
+      margin: 10px;
+
+      background: #fff;
+      border: 1px solid #D6D66C;
+      padding: 0px 10px;
+    }
+
+    #comments_overlay button {
+      padding: 10px;
+      color: #4990E2;
+      font-weight: 600;
     }
 
   </style>
+  <script>
+    // This code should be generated on the server based on the comments that
+    // are in the database
+    window.COMMENTS = {
+      'xref-thread-1': [
+        {id: 'comment-1', content: '<p>I am a <strong>comment</strong>.</p>'},
+        {id: 'comment-2', content: '<p>Me too.</p>'}
+      ]
+    }
+  </script>
   <script type="text/javascript">
-    window.addEventListener("load", function() {
-      let forms = new SubstanceForms(document.body, {
-        comments: true
-      })
-      function _onSubmit(e) {
-        e.preventDefault()
-        e.stopPropagation()
+    window.addEventListener('load', function() {
+      var forms = new SubstanceForms(document.body)
 
-        let data = {
-          survey_motivation: forms.getHTML('survey_motivation'),
-          survey_name: document.getElementById('survey_name').value,
-          survey_recommend: document.querySelector('input[name="survey_recommend"]:checked').value
+      // Some state variables
+      var currentField, currentThread
+
+      // Register event handlers
+      var submissionForm = document.getElementById('submission')
+      submissionForm.addEventListener('submit', _onSubmit)
+      var addCommentButton = document.getElementById('add_comment_button')
+      addCommentButton.addEventListener('click', _onAddComment)
+
+      forms.on('selection:changed', function({fieldName, activeAnnotation}) {
+        // HACK: we need this state on selection positioning
+        currentField = fieldName
+        if (fieldName === 'add_comment') return
+        if (activeAnnotation && activeAnnotation.type === 'xref') {
+          currentThread = activeAnnotation.id
+          renderThread(currentThread)
+        } else {
+          hideThread()
+        }
+      })
+
+      // Position comments overlay based on current selection
+      forms.on('selection:positioned', function(hints) {
+        if (currentField == 'add_comment') return
+        var commentsOverlay = document.getElementById('comments_overlay')
+        commentsOverlay.style.top = hints.selectionRect.top
+      })
+
+      function hideThread() {
+        var commentsOverlay = document.getElementById('comments_overlay')
+        commentsOverlay.classList.add('hidden')
+      }
+
+      function renderThread(threadId) {
+        var comments = COMMENTS[threadId]
+        // Create a thread entry if not yet existing
+        if (!comments) {
+          COMMENTS[threadId] = comments = []
+        }
+        var threadEl = document.getElementById('thread')
+        var commentsEl = document.createElement('div')
+        commentsEl.classList.add('se-comments')
+        var commentsOverlay = document.getElementById('comments_overlay')
+        comments.forEach((comment) => {
+          var commentEl = document.createElement('div')
+          commentEl.classList.add('sc-comment')
+          commentEl.id = comment.id
+          commentEl.innerHTML = comment.content
+          commentsEl.appendChild(commentEl)
+        })
+        threadEl.innerHTML = ''
+        threadEl.appendChild(commentsEl)
+        // Show the comments overlay
+        commentsOverlay.classList.remove('hidden')
+      }
+
+      function _onSubmit(event) {
+        event.preventDefault()
+        event.stopPropagation()
+        var data = {
+          comments: COMMENTS,
+          description: forms.getHTML('description')
         }
         console.info(data)
         alert(JSON.stringify(data, null, '  '))
       }
 
-      var comments = {
-        'my-comment': {
-          content: 'Hello world'
-        }
+      function _onAddComment(event) {
+        var commentHTML = forms.getHTML('add_comment')
+        var comments = COMMENTS[currentThread]
+        comments.push({
+          content: commentHTML
+        })
+        renderThread(currentThread)
       }
-
-      forms.on('comment:selected', function(fieldName, commentId) {
-        renderComment(commentId)
-      })
-
-      function renderComment() {
-
-      }
-
     })
-
   </script>
 </head>
 <body>
   <div class="page">
-    <div id="comments_overlay">
-      Hello I am a comment
+    <div id="comments_overlay" class="hidden">
+      <div id="thread">
+
+      </div>
+      <div id="add_comment_wrapper">
+        <div id="add_comment" editable data-type="area">
+          <p></p>
+        </div>
+        <button id="add_comment_button">Add comment</button>
+      </div>
     </div>
     <div class="title">Substance Forms</div>
     <div class="intro">
@@ -155,65 +246,20 @@
       you can use to create better web forms. You can mark areas of the page as
       editable and access the contents with a simple JavaScript API.
     </div>
-    <form id="submission" onsubmit="_onSubmit(event)">
+    <form id="submission">
       <div class="form-section">
-        <div class="form-heading">What brought you here?</div>
+        <div class="form-heading">Integrating Comments</div>
         <div class="form-hint">
-          The following field is a Substance rich text editor, that produces clean annotated HTML.
+          This example shows comment threads integrated with your form. Please see the source code of
+          the page to learn how it was implemented.
         </div>
-        <div id="survey_motivation" editable data-type="area">
-          <p>Tell us <strong>why</strong> you <span data-id="my-comment">are</span> here (<em>200-1000 words</em>).</p>
-          <img src="http://www.publicdomainpictures.net/pictures/140000/velka/coromandel-peninsula.jpg"/>
-          <ul>
-            <li>A</li>
-            <li>B</li>
-            <ul>
-              <li>A1</li>
-              <li>A2</li>
-            </ul>
-          </ul>
-          <p>This is <em>just</em> a test.</p>
+        <div id="description" editable data-type="area">
+          <p>Move the cursor over the <span data-type="xref" data-id="xref-thread-1">marker</span> to see comments.</p>
         </div>
       </div>
 
       <div class="form-section">
-        <div class="form-heading">Can you provide a short tabular CV?</div>
-        <div class="form-hint">
-          This is another rich text field. Note, that you can drag the table and drop it on the previous field.
-        </div>
-        <div id="hello" editable data-type="area">
-          <p>Here is my CV:</p>
-          <table>
-            <tbody>
-              <tr><td>A</td><td>B</td><td>C</td></tr>
-              <tr><td>A</td><td>B</td><td>C</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <div class="form-heading">What's your name?</div>
-        <div class="form-hint">
-          This is a regular HTML input field. We designed Substance forms so you can easily mix it with classic form elements or combine it with 3rd party widget libraries (date picker etc.)
-        </div>
-        <input id="survey_name" class="form-input" type="text" placeholder="Enter your full name" name="survey_name">
-      </div>
-
-      <div class="form-section">
-        <div class="form-heading">Would you recommend this library?</div>
-        <div class="form-hint">
-          Regular radio buttons can be used too.
-        </div>
-        <div class="option-group">
-          <div class="option"><input type="radio" name="survey_recommend" value="definitely" checked> Definitely</div>
-          <div class="option"><input type="radio" name="survey_recommend" value="maybe"> Maybe</div>
-          <div class="option"><input type="radio" name="survey_recommend" value="never"> Never</div>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <button id="submit-button" type="submit" form="submission">Submit Survey</button>
+        <button id="submit-button" type="submit" form="submission">Submit Form with Comments</button>
         <div class="form-hint text-center">
           This is just a demo, nothing is actually submitted.
         </div>

@@ -3,7 +3,7 @@
 
 /* Substance-forms specific styles */
 @import './minimal-switch-text-type/_minimal-switch-text-type.css';
-@import './comment/_comment.css';
+@import './xref/_xref.css';
 
 .sc-overlay {
   font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
