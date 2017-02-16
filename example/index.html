@@ -100,12 +100,15 @@
 
   </style>
   <script type="text/javascript">
+    var forms
+    window.addEventListener('load', function() {
+      forms = new SubstanceForms(document.body)
+    })
+
     function _onSubmit(e) {
       e.preventDefault()
       e.stopPropagation()
-      let forms = window.substanceForms
-
-      let data = {
+      var data = {
         survey_motivation: forms.getHTML('survey_motivation'),
         survey_name: document.getElementById('survey_name').value,
         survey_recommend: document.querySelector('input[name="survey_recommend"]:checked').value
@@ -127,20 +130,15 @@
       <div class="form-section">
         <div class="form-heading">What brought you here?</div>
         <div class="form-hint">
-          The following field is a Substance rich text editor, that produces clean annotated HTML.
+          The following field is a Substance rich text editor. It produces clean annotated HTML.
         </div>
         <div id="survey_motivation" editable data-type="area">
           <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>).</p>
-          <img src="http://www.publicdomainpictures.net/pictures/140000/velka/coromandel-peninsula.jpg"/>
+          <p>You can also use lists:</p>
           <ul>
-            <li>A</li>
-            <li>B</li>
-            <ul>
-              <li>A1</li>
-              <li>A2</li>
-            </ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
           </ul>
-          <p>This is <em>just</em> a test.</p>
         </div>
       </div>
 
