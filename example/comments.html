@@ -134,10 +134,17 @@
       font-weight: 600;
     }
 
+    #add_comment {
+      margin: 10px;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid #D6D66C;
+    }
+
   </style>
   <script>
     // This code should be generated on the server based on the comments that
-    // are in the database
+    // are stored in the database
     window.COMMENTS = {
       'xref-thread-1': [
         {id: 'comment-1', content: '<p>I am a <strong>comment</strong>.</p>'},
@@ -149,8 +156,12 @@
     window.addEventListener('load', function() {
       var forms = new SubstanceForms(document.body)
 
+      // Render comment editor
+      var addCommentEl = document.getElementById('add_comment')
+      var commentEditor = forms.createHTMLEditor('add_comment', '<p></p>', addCommentEl)
+
       // Some state variables
-      var currentField, currentThread
+      var currentField, currentThread, commentEditor
 
       // Register event handlers
       var submissionForm = document.getElementById('submission')
@@ -159,9 +170,6 @@
       addCommentButton.addEventListener('click', _onAddComment)
 
       forms.on('selection:changed', function({fieldName, activeAnnotation}) {
-        // HACK: we need this state on selection positioning
-        currentField = fieldName
-        if (fieldName === 'add_comment') return
         if (activeAnnotation && activeAnnotation.type === 'xref') {
           currentThread = activeAnnotation.id
           renderThread(currentThread)
@@ -172,7 +180,7 @@
 
       // Position comments overlay based on current selection
       forms.on('selection:positioned', function(hints) {
-        if (currentField == 'add_comment') return
+        if (hints.editorId == 'add_comment') return
         var commentsOverlay = document.getElementById('comments_overlay')
         commentsOverlay.style.top = hints.selectionRect.top
       })
@@ -180,6 +188,7 @@
       function hideThread() {
         var commentsOverlay = document.getElementById('comments_overlay')
         commentsOverlay.classList.add('hidden')
+        forms.setHTML('add_comment', '<p></p>')
       }
 
       function renderThread(threadId) {
@@ -190,6 +199,7 @@
         }
         var threadEl = document.getElementById('thread')
         var commentsEl = document.createElement('div')
+
         commentsEl.classList.add('se-comments')
         var commentsOverlay = document.getElementById('comments_overlay')
         comments.forEach((comment) => {
@@ -217,11 +227,13 @@
       }
 
       function _onAddComment(event) {
-        var commentHTML = forms.getHTML('add_comment')
+        var commentHTML = commentEditor.getHTML()
         var comments = COMMENTS[currentThread]
         comments.push({
           content: commentHTML
         })
+        // Reset the commentsEditor
+        forms.setHTML('add_comment', '<p></p>')
         renderThread(currentThread)
       }
     })
@@ -234,8 +246,8 @@
 
       </div>
       <div id="add_comment_wrapper">
-        <div id="add_comment" editable data-type="area">
-          <p></p>
+        <div id="add_comment">
+          <!-- EditComment goes here -->
         </div>
         <button id="add_comment_button">Add comment</button>
       </div>
