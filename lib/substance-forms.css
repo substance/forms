@@ -12,6 +12,6 @@
     a parent with position: relative, which then will screw up absolute
     positioning.
   */
-  position: fixed;
+  /*position: fixed;*/
   font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
 }
