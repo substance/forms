@@ -128,15 +128,18 @@
       padding: 0px 10px;
     }
 
-    #comments_overlay button {
+    #add_comment_wrapper > button {
       padding: 10px;
       color: #4990E2;
       font-weight: 600;
     }
 
     #add_comment {
-      margin: 10px;
-      padding: 10px;
+      /*margin: 10px;
+      padding: 10px;*/
+    }
+
+    #add_comment .sc-rich-text-area {
       background: #fff;
       border: 1px solid #D6D66C;
     }
@@ -154,11 +157,11 @@
   </script>
   <script type="text/javascript">
     window.addEventListener('load', function() {
-      var forms = new SubstanceForms(document.body)
-
-      // Render comment editor
-      var addCommentEl = document.getElementById('add_comment')
-      var commentEditor = forms.createHTMLEditor('add_comment', '<p></p>', addCommentEl)
+      forms = new SubstanceForms()
+      // Activate richtext areas via API
+      forms.addRichTextArea('description', document.getElementById('description'), {
+        enabledPackages: ['strong', 'emphasis', 'link', 'xref']
+      })
 
       // Some state variables
       var currentField, currentThread, commentEditor
@@ -169,7 +172,8 @@
       var addCommentButton = document.getElementById('add_comment_button')
       addCommentButton.addEventListener('click', _onAddComment)
 
-      forms.on('selection:changed', function({fieldName, activeAnnotation}) {
+      forms.on('selection:changed', function({editorId, activeAnnotation}) {
+        if (editorId === 'add_comment') return;
         if (activeAnnotation && activeAnnotation.type === 'xref') {
           currentThread = activeAnnotation.id
           renderThread(currentThread)
@@ -188,7 +192,7 @@
       function hideThread() {
         var commentsOverlay = document.getElementById('comments_overlay')
         commentsOverlay.classList.add('hidden')
-        forms.setHTML('add_comment', '<p></p>')
+        // forms.setHTML('add_comment', '<p></p>')
       }
 
       function renderThread(threadId) {
@@ -227,13 +231,13 @@
       }
 
       function _onAddComment(event) {
-        var commentHTML = commentEditor.getHTML()
+        var commentHTML = forms.getHTML('add_comment')
         var comments = COMMENTS[currentThread]
         comments.push({
           content: commentHTML
         })
         // Reset the commentsEditor
-        forms.setHTML('add_comment', '<p></p>')
+        // forms.setHTML('add_comment', '<p></p>')
         renderThread(currentThread)
       }
     })
@@ -246,8 +250,8 @@
 
       </div>
       <div id="add_comment_wrapper">
-        <div id="add_comment">
-          <!-- EditComment goes here -->
+        <div editable id="add_comment">
+          <p></p>
         </div>
         <button id="add_comment_button">Add comment</button>
       </div>

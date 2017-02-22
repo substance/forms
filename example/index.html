@@ -102,7 +102,10 @@
   <script type="text/javascript">
     var forms
     window.addEventListener('load', function() {
-      forms = new SubstanceForms(document.body)
+      forms = new SubstanceForms()
+      // Activate richtext areas via API
+      forms.addRichTextArea('survey_motivation', document.getElementById('survey_motivation'))
+      forms.addRichTextArea('cv', document.getElementById('cv'))
     })
 
     function _onSubmit(e) {
@@ -110,6 +113,7 @@
       e.stopPropagation()
       var data = {
         survey_motivation: forms.getHTML('survey_motivation'),
+        survey_cv: forms.getHTML('survey_cv'),
         survey_name: document.getElementById('survey_name').value,
         survey_recommend: document.querySelector('input[name="survey_recommend"]:checked').value
       }
@@ -145,9 +149,9 @@
       <div class="form-section">
         <div class="form-heading">Can you provide a short tabular CV?</div>
         <div class="form-hint">
-          This is another rich text field. Note, that you can drag the table and drop it on the previous field.
+          This is another rich text field.
         </div>
-        <div id="hello" editable data-type="area">
+        <div id="cv" editable data-type="area">
           <p>Here is my CV:</p>
           <table>
             <tbody>
