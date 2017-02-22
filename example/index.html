@@ -105,7 +105,7 @@
       forms = new SubstanceForms()
       // Activate richtext areas via API
       forms.addRichTextArea('survey_motivation', document.getElementById('survey_motivation'))
-      forms.addRichTextArea('cv', document.getElementById('cv'))
+      forms.addRichTextArea('survey_cv', document.getElementById('survey_cv'))
     })
 
     function _onSubmit(e) {
@@ -151,7 +151,7 @@
         <div class="form-hint">
           This is another rich text field.
         </div>
-        <div id="cv" editable data-type="area">
+        <div id="survey_cv" editable data-type="area">
           <p>Here is my CV:</p>
           <table>
             <tbody>
