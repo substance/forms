@@ -162,10 +162,11 @@
       forms.addRichTextArea('description', document.getElementById('description'), {
         enabledPackages: ['strong', 'emphasis', 'link', 'xref']
       })
-
-      // Some state variables
-      var currentField, currentThread, commentEditor
-
+      forms.addRichTextArea('add_comment', document.getElementById('add_comment'), {
+        enabledPackages: ['strong', 'emphasis', 'link']
+      })
+      // State variables
+      var currentThread
       // Register event handlers
       var submissionForm = document.getElementById('submission')
       submissionForm.addEventListener('submit', _onSubmit)
@@ -192,7 +193,7 @@
       function hideThread() {
         var commentsOverlay = document.getElementById('comments_overlay')
         commentsOverlay.classList.add('hidden')
-        // forms.setHTML('add_comment', '<p></p>')
+        forms.setHTML('add_comment', '<p></p>')
       }
 
       function renderThread(threadId) {
@@ -237,7 +238,7 @@
           content: commentHTML
         })
         // Reset the commentsEditor
-        // forms.setHTML('add_comment', '<p></p>')
+        forms.setHTML('add_comment', '<p></p>')
         renderThread(currentThread)
       }
     })
