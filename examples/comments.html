@@ -38,6 +38,10 @@
       font-size: 18px;
     }
 
+    .intro > p {
+      padding-bottom: 20px;
+    }
+
     .form-section {
       padding-bottom: 20px;
     }
@@ -254,16 +258,17 @@
     </div>
     <div class="title">Substance Forms</div>
     <div class="intro">
-      Substance Forms is a <a href="http://github.com/substance/forms">JavaScript library</a>
+      <p>Substance Forms is a <a href="http://github.com/substance/forms">JavaScript library</a>
       you can use to create better web forms. You can mark areas of the page as
       editable and access the contents with a simple JavaScript API.
+      </p>
+      <p>This example shows comment threads integrated with your form. For basic usage see the <a href="index.html">starter example</a>.</p>
     </div>
     <form id="submission">
       <div class="form-section">
         <div class="form-heading">Integrating Comments</div>
         <div class="form-hint">
-          This example shows comment threads integrated with your form. Please see the source code of
-          the page to learn how it was implemented.
+          Please see the source code of the page to learn how it was implemented.
         </div>
         <div id="description" editable data-type="area">
           <p>Move the cursor over the <span data-type="xref" data-id="xref-thread-1">marker</span> to see comments.</p>
