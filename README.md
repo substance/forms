@@ -5,7 +5,7 @@ You can mark areas of the page as editable and access the contents with a
 simple JavaScript API. You have full control over markup and styling, and you
 can mix the rich text inputs with classic form elements.
 
-See [the demo](http://substance.io/forms).
+See [the](http://substance.io/forms) [demos](http://substance.io/forms/comments.html).
 
 Project Status: Beta
 
