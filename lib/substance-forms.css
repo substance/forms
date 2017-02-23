@@ -6,12 +6,5 @@
 @import './xref/_xref.css';
 
 .sc-overlay {
-  /*
-    HACK: We need to use fixed positioning because we have multiple
-    body-scrollpanes (one per rich text editor) and those may have
-    a parent with position: relative, which then will screw up absolute
-    positioning.
-  */
-  /*position: fixed;*/
   font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
 }

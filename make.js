@@ -21,7 +21,7 @@ function _minifyLib() {
 
 b.task('assets', function() {
   b.copy('node_modules/font-awesome', './dist/lib/font-awesome')
-  b.copy('./node_modules/substance/substance-reset.css', './dist/substance-reset.css')
+  b.css('./node_modules/substance/substance-reset.css', './dist/substance-reset.css')
   b.css('./lib/substance-forms.css', './dist/substance-forms.css', { variables: true })
 })
 
@@ -29,9 +29,9 @@ b.task('clean', function() {
   b.rm('./dist');
 })
 
-b.task('example', function() {
-  b.copy('./example/index.html', './dist/')
-  b.copy('./example/comments.html', './dist/')
+b.task('examples', function() {
+  b.copy('./examples/index.html', './dist/')
+  b.copy('./examples/comments.html', './dist/')
 })
 
 b.task('lib', function() {
@@ -43,8 +43,8 @@ b.task('dev:lib', function() {
   _buildLib()
 })
 
-b.task('default', ['clean', 'assets', 'example', 'lib'])
-b.task('dev', ['clean', 'assets', 'example', 'dev:lib'])
+b.task('default', ['clean', 'assets', 'examples', 'lib'])
+b.task('dev', ['clean', 'assets', 'examples', 'dev:lib'])
 
 b.setServerPort(5555)
 b.serve({
