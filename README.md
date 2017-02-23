@@ -7,7 +7,7 @@ can mix the rich text inputs with classic form elements.
 
 See [the demo](http://substance.io/forms).
 
-Project Status: Experimental
+Project Status: Beta
 
 ## Usage
 
@@ -65,6 +65,14 @@ $ npm install
 $ npm start
 ```
 
+For faster builds you can run:
+
+```
+$ npm run dev
+```
+
+But then you need a browser that can run ES6 code natively.
+
 ## Credits
 
-This project is developed by [Substance](http://substance.io) in collaboration with the University of California.
+This project is developed by [Substance](http://substance.io) in collaboration with the [University of California Curation Center](http://www.cdlib.org/services/uc3/index.html).
