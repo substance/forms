@@ -1,6 +1,6 @@
 {
   "name": "substance-forms",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Better web forms with Substance.",
   "main": "dist/substance-forms.js",
   "jsnext:main": "lib/substance-forms.js",
