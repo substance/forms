@@ -7,7 +7,7 @@ can mix the rich text inputs with classic form elements.
 
 See [the demo](http://substance.io/forms).
 
-Project Status: Experimental
+Project Status: Beta
 
 ## Usage
 
@@ -16,12 +16,10 @@ Download the latest [release](https://github.com/substance/forms/releases) and u
 ```html
 <html>
 <head>
-  <script type="text/javascript" src="substance/substance.js"></script>
   <script type="text/javascript" src="substance-forms.js"></script>
-
   <style>
     /* FontAwesome is used to display the icons shown in the overlay */
-    @import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+    @import 'lib/font-awesome/css/font-awesome.min.css';
     /* Substance Forms looks best with a CSS reset */
     @import 'substance/substance-reset.css';
     /* Substance Forms UI styles */
@@ -29,6 +27,14 @@ Download the latest [release](https://github.com/substance/forms/releases) and u
   </style>
 </head>
 <script>
+  var form
+  window.addEventListener('load', function() {
+    forms = new SubstanceForms()
+    /* Activate rich text editing */
+    forms.addRichTextArea('about', document.getElementById('about'), {
+      enabledPackages: ['heading', 'strong', 'emphasis', 'link', 'list', 'table']
+    })
+  })
   function _onSubmit() {
     let forms = window.substanceForms
     let formData = {
@@ -39,13 +45,15 @@ Download the latest [release](https://github.com/substance/forms/releases) and u
 </script>
 <body>
   <!-- The editable attribute marks editable areas -->
-  <div id="about" editable>
-    <p>Tell us <strong>something</strong> about <em>you</em></p>
+  <div id="about">
+    <p>Tell us <strong>something</strong> about <em>you</em>.</p>
   </div>
   <button onclick="_onSubmit()">Submit</button>
 </body>
 </html>
 ```
+
+For a complete usage example see [here](examples/index.html). Learn advanced usage by inspecting the [comments example](examples/comments.html).
 
 ## Development
 
@@ -57,6 +65,14 @@ $ npm install
 $ npm start
 ```
 
+For faster builds you can run:
+
+```
+$ npm run dev
+```
+
+But then you need a browser that can run ES6 code natively.
+
 ## Credits
 
-This project is developed by [Substance](http://substance.io) in collaboration with the University of California.
+This project is developed by [Substance](http://substance.io) in collaboration with the [University of California Curation Center](http://www.cdlib.org/services/uc3/index.html).

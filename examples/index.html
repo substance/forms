@@ -33,6 +33,10 @@
       font-size: 18px;
     }
 
+    .intro > p {
+      padding-bottom: 20px;
+    }
+
     .form-section {
       padding-bottom: 20px;
     }
@@ -100,13 +104,20 @@
 
   </style>
   <script type="text/javascript">
+    var forms
+    window.addEventListener('load', function() {
+      forms = new SubstanceForms()
+      // Activate richtext areas via API
+      forms.addRichTextArea('survey_motivation', document.getElementById('survey_motivation'))
+      forms.addRichTextArea('survey_cv', document.getElementById('survey_cv'))
+    })
+
     function _onSubmit(e) {
       e.preventDefault()
       e.stopPropagation()
-      let forms = window.substanceForms
-
-      let data = {
+      var data = {
         survey_motivation: forms.getHTML('survey_motivation'),
+        survey_cv: forms.getHTML('survey_cv'),
         survey_name: document.getElementById('survey_name').value,
         survey_recommend: document.querySelector('input[name="survey_recommend"]:checked').value
       }
@@ -119,37 +130,37 @@
   <div class="page">
     <div class="title">Substance Forms</div>
     <div class="intro">
-      Substance Forms is a <a href="http://github.com/substance/forms">JavaScript library</a>
-      you can use to create better web forms. You can mark areas of the page as
-      editable and access the contents with a simple JavaScript API.
+      <p>
+        Substance Forms is a <a href="http://github.com/substance/forms">JavaScript library</a>
+        you can use to create better web forms. You can mark areas of the page as
+        editable and access the contents with a simple JavaScript API.
+      </p>
+      <p>
+        Below is an example for basic usage. For advanced usage see the <a href="comments.html">comments example</a>.
+      </p>
     </div>
     <form id="submission" onsubmit="_onSubmit(event)">
       <div class="form-section">
         <div class="form-heading">What brought you here?</div>
         <div class="form-hint">
-          The following field is a Substance rich text editor, that produces clean annotated HTML.
+          The following field is a Substance rich text editor. It produces clean annotated HTML.
         </div>
         <div id="survey_motivation" editable data-type="area">
           <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>).</p>
-          <img src="http://www.publicdomainpictures.net/pictures/140000/velka/coromandel-peninsula.jpg"/>
+          <p>You can also use lists:</p>
           <ul>
-            <li>A</li>
-            <li>B</li>
-            <ul>
-              <li>A1</li>
-              <li>A2</li>
-            </ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
           </ul>
-          <p>This is <em>just</em> a test.</p>
         </div>
       </div>
 
       <div class="form-section">
         <div class="form-heading">Can you provide a short tabular CV?</div>
         <div class="form-hint">
-          This is another rich text field. Note, that you can drag the table and drop it on the previous field.
+          This is another rich text field.
         </div>
-        <div id="hello" editable data-type="area">
+        <div id="survey_cv" editable data-type="area">
           <p>Here is my CV:</p>
           <table>
             <tbody>

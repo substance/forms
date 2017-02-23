@@ -1,6 +1,6 @@
 {
   "name": "substance-forms",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Better web forms with Substance.",
   "main": "dist/substance-forms.js",
   "jsnext:main": "lib/substance-forms.js",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "substance": "1.0.0-beta.6.2",
+    "substance": "substance/substance#1d6fd8f2f5494703522bab8558698e106c93f2a5",
     "substance-bundler": "0.7.2",
     "font-awesome": "4.5.0",
     "uglify-js-harmony": "2.6.2"

@@ -1,0 +1,287 @@
+<html>
+<head>
+  <script type="text/javascript" src="substance-forms.js"></script>
+
+  <style>
+    @import url('lib/font-awesome/css/font-awesome.min.css');
+    @import 'substance-reset.css';
+    @import 'substance-forms.css';
+
+    body {
+      line-height: 1.5;
+      font-family: "Avenir Next", arial, sans-serif;
+    }
+
+    .page {
+      max-width: 600px;
+      margin: auto;
+      padding-top: 50px;
+      position: relative;
+    }
+
+    a {
+      color: #4990E2;
+    }
+
+    .hidden {
+      visibility: hidden;
+    }
+
+    .title {
+      font-weight: 600;
+      font-size: 36px;
+      padding-bottom: 10px;
+    }
+
+    .intro {
+      padding-bottom: 20px;
+      font-size: 18px;
+    }
+
+    .intro > p {
+      padding-bottom: 20px;
+    }
+
+    .form-section {
+      padding-bottom: 20px;
+    }
+
+    .form-hint {
+      font-size: 14px;
+      font-family: Georgia;
+      color: #777;
+      padding-bottom: 20px;
+    }
+
+    .form-heading {
+      font-weight: 600;
+      font-size: 26px;
+      padding-bottom: 10px;
+    }
+
+    input.form-input {
+      font-family: "Avenir Next", arial, sans-serif;
+      border: 1px solid #ddd;
+      height: 40px;
+      padding: 0px 5px;
+      font-size: 16px;
+      display: block;
+      width: 100%;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      font-family: "Avenir Next", arial, sans-serif;
+    }
+
+    h1 { font-size: 24px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 16px; }
+
+    b, strong { font-weight: 600; }
+    i, em { font-style: italic; }
+
+    .sc-rich-text-area {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 0px 20px;
+      padding-bottom: 0px;
+    }
+
+    .sc-rich-text-area .sc-container-editor > * {
+      margin: 10px 0;
+    }
+
+    #submit-button {
+      background-color: #4990E2;
+      padding: 10px;
+      border-width: 2px;
+      border-color: buttonface;
+      width: 300px;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      margin: 20px auto;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    #comments_overlay {
+      position: absolute;
+      top: 0px;
+      width: 200px;
+      right: -220px;
+      border-radius: 5px;
+      background: #ffff82;
+      border: 1px solid #D6D66C;
+      font-size: 12px;
+    }
+
+    #comments_overlay .sc-comment {
+      border-bottom: 1px solid #D6D66C;
+      padding: 10px;
+    }
+
+    #comments_overlay .sc-rich-text-area {
+      margin: 10px;
+
+      background: #fff;
+      border: 1px solid #D6D66C;
+      padding: 0px 10px;
+    }
+
+    #add_comment_wrapper > button {
+      padding: 10px;
+      color: #4990E2;
+      font-weight: 600;
+    }
+
+    #add_comment .sc-rich-text-area {
+      background: #fff;
+      border: 1px solid #D6D66C;
+    }
+
+  </style>
+  <script>
+    // This code should be generated on the server based on the comments that
+    // are stored in the database
+    window.COMMENTS = {
+      'xref-thread-1': [
+        {id: 'comment-1', content: '<p>I am a <strong>comment</strong>.</p>'},
+        {id: 'comment-2', content: '<p>Me too.</p>'}
+      ]
+    }
+  </script>
+  <script type="text/javascript">
+    window.addEventListener('load', function() {
+      forms = new SubstanceForms()
+      // Activate richtext areas via API
+      forms.addRichTextArea('description', document.getElementById('description'), {
+        enabledPackages: ['strong', 'emphasis', 'link', 'xref']
+      })
+      forms.addRichTextArea('add_comment', document.getElementById('add_comment'), {
+        enabledPackages: ['strong', 'emphasis', 'link', 'list']
+      })
+      // State variables
+      var currentThread
+      // Register event handlers
+      var submissionForm = document.getElementById('submission')
+      submissionForm.addEventListener('submit', _onSubmit)
+      var addCommentButton = document.getElementById('add_comment_button')
+      addCommentButton.addEventListener('click', _onAddComment)
+
+      forms.on('selection:changed', function({editorId, activeAnnotation}) {
+        if (editorId === 'add_comment') return;
+        if (activeAnnotation && activeAnnotation.type === 'xref') {
+          currentThread = activeAnnotation.id
+          renderThread(currentThread)
+        } else {
+          hideThread()
+        }
+      })
+
+      // Position comments overlay based on current selection
+      forms.on('selection:positioned', function(hints) {
+        if (hints.editorId == 'add_comment') return
+        var commentsOverlay = document.getElementById('comments_overlay')
+        commentsOverlay.style.top = hints.selectionRect.top
+      })
+
+      function hideThread() {
+        var commentsOverlay = document.getElementById('comments_overlay')
+        commentsOverlay.classList.add('hidden')
+        forms.setHTML('add_comment', '<p></p>')
+      }
+
+      function renderThread(threadId) {
+        var comments = COMMENTS[threadId]
+        // Create a thread entry if not yet existing
+        if (!comments) {
+          COMMENTS[threadId] = comments = []
+        }
+        var threadEl = document.getElementById('thread')
+        var commentsEl = document.createElement('div')
+
+        commentsEl.classList.add('se-comments')
+        var commentsOverlay = document.getElementById('comments_overlay')
+        comments.forEach((comment) => {
+          var commentEl = document.createElement('div')
+          commentEl.classList.add('sc-comment')
+          commentEl.id = comment.id
+          commentEl.innerHTML = comment.content
+          commentsEl.appendChild(commentEl)
+        })
+        threadEl.innerHTML = ''
+        threadEl.appendChild(commentsEl)
+        // Show the comments overlay
+        commentsOverlay.classList.remove('hidden')
+      }
+
+      function _onSubmit(event) {
+        event.preventDefault()
+        event.stopPropagation()
+        var data = {
+          comments: COMMENTS,
+          description: forms.getHTML('description')
+        }
+        console.info(data)
+        alert(JSON.stringify(data, null, '  '))
+      }
+
+      function _onAddComment(event) {
+        var commentHTML = forms.getHTML('add_comment')
+        var comments = COMMENTS[currentThread]
+        comments.push({
+          content: commentHTML
+        })
+        // Reset the commentsEditor
+        forms.setHTML('add_comment', '<p></p>')
+        renderThread(currentThread)
+      }
+    })
+  </script>
+</head>
+<body>
+  <div class="page">
+    <div id="comments_overlay" class="hidden">
+      <div id="thread">
+
+      </div>
+      <div id="add_comment_wrapper">
+        <div editable id="add_comment">
+          <p></p>
+        </div>
+        <button id="add_comment_button">Add comment</button>
+      </div>
+    </div>
+    <div class="title">Substance Forms</div>
+    <div class="intro">
+      <p>Substance Forms is a <a href="http://github.com/substance/forms">JavaScript library</a>
+      you can use to create better web forms. You can mark areas of the page as
+      editable and access the contents with a simple JavaScript API.
+      </p>
+      <p>This example shows comment threads integrated with your form. For basic usage see the <a href="index.html">starter example</a>.</p>
+    </div>
+    <form id="submission">
+      <div class="form-section">
+        <div class="form-heading">Integrating Comments</div>
+        <div class="form-hint">
+          Please see the source code of the page to learn how it was implemented.
+        </div>
+        <div id="description" editable data-type="area">
+          <p>Move the cursor over the <span data-type="xref" data-id="xref-thread-1">marker</span> to see comments.</p>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <button id="submit-button" type="submit" form="submission">Submit Form with Comments</button>
+        <div class="form-hint text-center">
+          This is just a demo, nothing is actually submitted.
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
