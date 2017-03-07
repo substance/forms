@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "substance": "substance/substance#1d6fd8f2f5494703522bab8558698e106c93f2a5",
+    "substance": "substance/substance#experimental/beta-6-with-editor-ids",
     "substance-bundler": "0.7.2",
     "font-awesome": "4.5.0",
     "uglify-js-harmony": "2.6.2"
