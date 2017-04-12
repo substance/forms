@@ -1,17 +1,19 @@
 let b = require('substance-bundler')
-let path = require('path')
 
-function _buildLib(transpileToES5, cleanup) {
+const GLOBALS = {
+  'substance': 'window.substance'
+}
+
+const EXTERNALS = ['substance']
+
+function _buildLib(production) {
   b.js('./lib/substance-forms.js', {
-    target: {
-      useStrict: !transpileToES5,
-      dest: './dist/substance-forms.js',
-      format: 'umd', moduleName: 'forms', sourceMapRoot: __dirname, sourceMapPrefix: 'forms'
-    },
-    // NOTE: do not include XNode (id must be the same as used by DefaultDOMElement)
-    ignore: ['./XNode'],
-    buble: Boolean(transpileToES5),
-    cleanup: Boolean(cleanup)
+    dest: './dist/substance-forms.js',
+    format: 'umd', moduleName: 'forms',
+    globals: GLOBALS,
+    external: EXTERNALS,
+    buble: Boolean(production),
+    cleanup: Boolean(production)
   })
 }
 
@@ -20,7 +22,8 @@ function _minifyLib() {
 }
 
 b.task('assets', function() {
-  b.copy('node_modules/font-awesome', './dist/lib/font-awesome')
+  b.copy('./node_modules/font-awesome', './dist/lib/font-awesome')
+  b.copy('./node_modules/substance/dist/substance.js*', './dist/lib/')
   b.css('./node_modules/substance/substance-reset.css', './dist/substance-reset.css')
   b.css('./lib/substance-forms.css', './dist/substance-forms.css', { variables: true })
 })
@@ -35,7 +38,7 @@ b.task('examples', function() {
 })
 
 b.task('lib', function() {
-  _buildLib('transpile', 'clean')
+  _buildLib('production')
   _minifyLib()
 })
 
