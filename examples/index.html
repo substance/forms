@@ -109,7 +109,9 @@
     window.addEventListener('load', function() {
       forms = new SubstanceForms()
       // Activate richtext areas via API
-      forms.addRichTextArea('survey_motivation', document.getElementById('survey_motivation'))
+      forms.addRichTextArea('survey_motivation', document.getElementById('survey_motivation'), {
+        enabledPackages: ['heading', 'strong', 'emphasis', 'link', 'list', 'table', 'text-align']
+      })
       forms.addRichTextArea('survey_cv', document.getElementById('survey_cv'))
     })
 
@@ -148,7 +150,7 @@
         </div>
         <div id="survey_motivation" editable data-type="area">
           <p>Tell us <strong>why</strong> you are here (<em>200-1000 words</em>).</p>
-          <p>You can also use lists:</p>
+          <p data-text-align="center">You can also use lists:</p>
           <ul>
             <li>Item 1</li>
             <li>Item 2</li>
