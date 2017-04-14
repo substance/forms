@@ -2,7 +2,6 @@
 @import '../node_modules/substance/substance.css';
 
 /* Substance-forms specific styles */
-@import './minimal-switch-text-type/_minimal-switch-text-type.css';
 @import './xref/_xref.css';
 
 .sc-overlay {
